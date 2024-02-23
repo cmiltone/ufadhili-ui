@@ -1,0 +1,13 @@
+html {
+  overflow-y: hidden;
+  font-family: 'Anta';
+}
+
+.scrollable {
+  overflow-y: scroll;
+}
+
+@font-face {
+  font-family: 'Anta';
+  src: url('./Anta-Regular.ttf');
+}
