@@ -14,17 +14,16 @@ type _File = {
 
 type Campaign = {
   _id?: string;
-  title?: string;
-  name?: string;
-  owner: User;
+  title: string;
+  owner: string | User;
   description: string;
   status?: 'active' | 'inactive';
-  target: {
-    amount: number;
-    currency: 'KES',
-  };
+  target: number;
+  raised: number;
+  current: number;
+  currency: 'KES' | 'USD',
   coverImage?: string;
-  category?: CampaignCategory;
+  category: CampaignCategory;
   suggestions?: string[];
   createdAt?: Date;
   updatedAt?: Date;

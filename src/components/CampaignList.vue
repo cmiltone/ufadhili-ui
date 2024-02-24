@@ -68,13 +68,22 @@
       </v-chip>
     </template>
     <template v-slot:[`item.target`]="{ item }">
-      {{ item.target.currency }} {{  numberWithCommas(item.target.amount) }}
+      {{ item.currency }} {{  numberWithCommas(item.target) }}
+    </template>
+    <template v-slot:[`item.raised`]="{ item }">
+      {{ item.currency }} {{  numberWithCommas(item.raised) }}
+    </template>
+    <template v-slot:[`item.current`]="{ item }">
+      {{ item.currency }} {{  numberWithCommas(item.current) }}
+    </template>
+    <template v-slot:[`item.category`]="{ item }">
+      {{ item.category.title }}
     </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}
     </template>
     <template v-slot:[`item.action`]="{ item }">
-      <v-btn size="x-small" color="primary" icon="mdi-account-edit-outline" :to="`/campaigns/${item._id}`" title="Edit Campaign" />
+      <v-btn size="x-small" color="primary" icon="mdi-pencil-outline" :to="`/campaigns/edit/${item._id}`" title="Edit Campaign" />
       <v-btn size="x-small" color="red" icon="mdi-delete-alert" title="Delete Campaign" @click="delCampaignDialog = true; campaign = item" />
     </template>
   </v-data-table-server>
@@ -83,7 +92,7 @@
 <script lang="ts">
 import { createNamespacedHelpers } from "vuex";
 
-import campaignStoreModule, { campaignToJSON } from "@/store/modules/campaign";
+import campaignStoreModule from "@/store/modules/campaign";
 import { readableDate, numberWithCommas } from "@/utils/filters";
 import placeholderImg from "@/assets/placeholder.png";
 import avatar from "@/assets/avatar.png";
@@ -99,7 +108,7 @@ export default {
     avatar,
     headers: [
       {
-        key: 'name',
+        key: 'title',
         title: 'Campaign',
         sortable: true,
         maxWidth: '150px'
@@ -115,6 +124,14 @@ export default {
       {
         key: 'target',
         title: 'Target',
+      },
+      {
+        key: 'raised',
+        title: 'Raised',
+      },
+      {
+        key: 'current',
+        title: 'Available',
       },
       {
         key: 'category',
@@ -134,7 +151,7 @@ export default {
       pageCount: 1,
     },
     delCampaignDialog: false,
-    campaign: campaignToJSON(),
+    campaign: undefined as undefined | Campaign,//campaignToJSON(),
     page: 1,
     limit: 10,
     loading: false,

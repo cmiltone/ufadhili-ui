@@ -22,14 +22,14 @@
     />
 
     <v-select
-      v-model="target.currency"
+      v-model="currency"
       :items="currencies"
       :rules="getRules('Currency')"
       label="Currency"
     />
 
     <v-text-field
-      v-model="target.amount"
+      v-model="target"
       type="number"
       label="Amount"
     />
@@ -102,13 +102,11 @@ export default {
     placeholderImg,
     title: "",
     description: "",
-    target: {
-      currency: "",
-      amount: 0,
-    },
+    target: 0,
+    currency: "",
     status: "",
     category: "",
-    currencies: ['KES', 'USD'],
+    currencies: ['KES'], //, 'USD'
   }),
   computed: {
     ...campaignCategoryGetters(["campaignCategoryPage"]),
@@ -126,6 +124,7 @@ export default {
       this.target = campaign.target;
       this.category = campaign.category?._id ?? "";
       this.status = campaign.status;
+      this.currency = campaign.currency;
     });
     this.fetchCampaignCategoryList();
   },

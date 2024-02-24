@@ -39,7 +39,7 @@
         <v-select
           label="Currency"
           v-model="currency"
-          :items="['KES', 'USD']"
+          :items="['KES']"
           placeholder="Select currency"
         />
       </v-col>
@@ -134,10 +134,8 @@ export default {
         title: this.title,
         description: this.description,
         category: this.category,
-        target: {
-          amount: this.amount,
-          currency: this.currency,
-        }
+        target: this.amount,
+        currency: this.currency,
       }).then((campaign) => {
         if (campaign) {
           this.uploadCoverImage(campaign._id);

@@ -8,16 +8,16 @@ type CampaignState = {
   campaignCount: number;
 };
 
-export const campaignToJSON = (campaign?: Campaign): Campaign => ({
-  _id: campaign?._id ?? '',
-  name: campaign?.title ?? '',
-  owner: campaign?.owner ?? userToJSON(),
-  description: campaign?.description ?? '',
-  status: campaign?.status ?? 'active',
-  target: campaign?.target ?? { amount: 0, currency: 'KES' },
-  createdAt: campaign?.createdAt,
-  updatedAt: campaign?.updatedAt,
-})
+// export const campaignToJSON = (campaign?: Campaign): Campaign => ({
+//   _id: campaign?._id ?? '',
+//   title: campaign?.title ?? '',
+//   owner: campaign?.owner ?? userToJSON(),
+//   description: campaign?.description ?? '',
+//   status: campaign?.status ?? 'active',
+//   target: campaign?.target ?? 0
+//   createdAt: campaign?.createdAt,
+//   updatedAt: campaign?.updatedAt,
+// })
 
 const campaign: Module<CampaignState, unknown> = {
   namespaced: true,
@@ -47,7 +47,7 @@ const campaign: Module<CampaignState, unknown> = {
       else state.campaignPage.docs[idx] = _campaign;
     },
     SET_CAMPAIGN_PAGE: (state, list) => {
-      list.docs = list.docs.map((c: Campaign) => campaignToJSON(c));
+      //list.docs = list.docs.map((c: Campaign) => campaignToJSON(c));
       state.campaignPage = list;
     },
     REMOVE_CAMPAIGN(state, _campaign) {
