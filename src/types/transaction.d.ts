@@ -2,6 +2,7 @@ type Payment = {
   _id?: string;
   ref: string;
   campaign: Campaign;
+  user: User;
   amount: number;
   currency: string;
   status: 'paid' | 'pending';
@@ -15,13 +16,14 @@ type Payment = {
   updatedAt: Date;
 };
 
-type WalletTransaction = {
-  _id?: string;
+type AppTransaction = {
+  _id: string;
   amount: number;
-  user: string | User;
+  campaign: string | Campaign;
   currency: string;
   type: 'payin' | 'payout';
-  walletBalance: number;
+  raised: number;
+  current: number;
   payment?: Payment;
   payout?: Payout;
   createdAt: Date;

@@ -4,38 +4,38 @@
     transition="dialog-bottom-transition"
     width="auto"
   >
-    <v-card v-if="walletTransaction" width="360px">
-      <v-toolbar color="primary" title="Wallet Transaction Details" />
+    <v-card v-if="transaction" width="360px">
+      <v-toolbar color="primary" title="Transaction Details" />
       <v-card-text>
         <table>
           <tr>
             <td valign="top" style="font-weight: bold; width: 90px;">Type:</td>
             <td>
-              {{ walletTransaction.type }}
-              {{ walletTransaction.payment?.ref ? ', ' + walletTransaction.payment.ref : '' }}
+              {{ transaction.type }}
+              {{ transaction.payment?.ref ? ', ' + transaction.payment.ref : '' }}
             </td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Amount:</td>
-            <td>{{ walletTransaction.currency }} {{  walletTransaction.amount.toLocaleString() }}</td>
+            <td>{{ transaction.currency }} {{  transaction.amount.toLocaleString() }}</td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Tech Fee:</td>
-            <td>{{ walletTransaction.currency }} {{  walletTransaction.payment?.techFee.toLocaleString() }}</td>
+            <td>{{ transaction.currency }} {{  transaction.payment?.techFee.toLocaleString() }}</td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Paid for:</td>
             <td>
-              {{ walletTransaction.payment?.campaignEnrolment?.campaign.title ?? 'n/a'}}
+              {{ transaction.payment?.campaign.title ?? 'n/a'}}
             </td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Paid By:</td>
-            <td>{{ walletTransaction.payment?.campaignEnrolment?.user.fullName ?? 'n/a'}}</td>
+            <td>{{ transaction.payment?.user.fullName ?? 'n/a'}}</td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Date:</td>
-            <td>{{ readableDate(walletTransaction.createdAt, 'MMM Do, YYYY, h:mmA') }}</td>
+            <td>{{ readableDate(transaction.createdAt, 'MMM Do, YYYY, h:mmA') }}</td>
           </tr>
         </table>
       </v-card-text>
@@ -51,27 +51,27 @@
     v-model:page="page"
     fixed-header
     :headers="headers"
-    :items="walletTransactionPage.docs"
+    :items="transactionPage.docs"
     :items-per-page="limit"
-    :items-length="walletTransactionPage.total"
+    :items-length="transactionPage.total"
     :loading="loading"
     height="80vh"
     loading-text="Fetching transactions..."
-    no-data-text="No walletTransactions to display"
+    no-data-text="No transactions to display"
     class="elevation-1"
     @update:options="setOptions"
   >
     <template v-slot:[`item.amount`]="{ item }">
       {{ item.currency }} {{  item.amount.toLocaleString() }}
     </template>
-    <template v-slot:[`item.walletBalance`]="{ item }">
-      {{ item.currency }} {{  item.walletBalance.toLocaleString() }}
+    <template v-slot:[`item.current`]="{ item }">
+      {{ item.currency }} {{  item.current.toLocaleString() }}
     </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}
     </template>
     <template v-slot:[`item.action`]="{ item }">
-      <v-btn size="x-small" color="primary" icon="mdi-details" title="View Details" @click="walletTransaction = item; transactionDialog = true" />
+      <v-btn size="x-small" color="primary" icon="mdi-details" title="View Details" @click="transaction = item; transactionDialog = true" />
     </template>
   </v-data-table-server>
 </template>
@@ -79,15 +79,15 @@
 <script lang="ts">
 import { createNamespacedHelpers } from "vuex";
 
-import walletTransactionStoreModule from "@/store/modules/walletTransaction";
+import transactionStoreModule from "@/store/modules/transaction";
 import { readableDate } from "@/utils/filters";
 
-const { mapActions: walletTransactionActions, mapGetters: walletTransactionGetters } = createNamespacedHelpers("TRANSACTION_LIST");
+const { mapActions: transactionActions, mapGetters: transactionGetters } = createNamespacedHelpers("TRANSACTION_LIST");
 
 export default {
-  name: "WalletTransactionList",
+  name: "TransactionList",
   props: {
-    userId: {
+    campaignId: {
       type: String,
       required: true,
     }
@@ -104,8 +104,8 @@ export default {
         title: 'Type',
       },
       {
-        key: 'walletBalance',
-        title: 'Wallet Balance',
+        key: 'current',
+        title: 'Balance',
       },
       {
         key: 'createdAt',
@@ -122,29 +122,26 @@ export default {
     page: 1,
     limit: 10,
     loading: false,
-    walletTransaction: undefined as undefined | WalletTransaction,
+    transaction: undefined as undefined | AppTransaction,
     transactionDialog: false,
     q: '',
     sort: '',
   }),
   computed: {
-    ...walletTransactionGetters(["walletTransactionPage"]),
-    user() {
-      return this.$store.getters.user;
-    }
+    ...transactionGetters(["transactionPage"]),
   },
   created() {
     this.fetchData();
   },
   methods: {
-    ...walletTransactionActions(["fetchWalletTransactionList"]),
+    ...transactionActions(["fetchTransactionList"]),
     readableDate,
     fetchData() {
       this.loading = true;
-      let params = `?userId=${this.userId}&page=${this.page}&limit=${this.limit}`;
+      let params = `?campaignId=${this.campaignId}&page=${this.page}&limit=${this.limit}`;
       if (this.q) params += `&q=${this.q}`
       if (this.sort) params += `&sort=${this.sort}`;
-      this.fetchWalletTransactionList(params).then((data) => {
+      this.fetchTransactionList(params).then((data) => {
         if (data) {
           this.page = data.page;
           this.limit = data.limit;
@@ -167,7 +164,7 @@ export default {
   },
   beforeCreate() {
     if (!this.$store.hasModule("TRANSACTION_LIST")) {
-      this.$store.registerModule("TRANSACTION_LIST", walletTransactionStoreModule);
+      this.$store.registerModule("TRANSACTION_LIST", transactionStoreModule);
     }
   },
   beforeUnmount() {

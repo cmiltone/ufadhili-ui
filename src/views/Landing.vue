@@ -88,7 +88,7 @@ export default {
             return `${API_URL}/v1/file/${filename}`;
         },
         fetchData(q?: string) {
-            let params = `?page=1&limit=1000`;
+            let params = `?page=1&limit=1000&status=active`;
             if (q) params += `&q=${q}`;
             this.fetchCampaignList(params);
         },

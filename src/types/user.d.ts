@@ -13,7 +13,7 @@ type CountryCode = {
 };
 
 type User = {
-  _id?: string;
+  _id: string;
   fullName: string;
   email: string;
   gender: 'male' | 'female' | 'other';

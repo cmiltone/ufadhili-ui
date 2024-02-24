@@ -7,7 +7,7 @@
     <v-card v-if="payout">
       <v-toolbar color="primary" title="Wallet Payout Details" />
       <v-card-text>
-        wallet payout {{  payout._id }}
+        payout {{  payout._id }}
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="primary" variant="text" @click="payoutDialog = false">
@@ -54,7 +54,7 @@ const { mapActions: payoutActions, mapGetters: payoutGetters } = createNamespace
 export default {
   name: "PayoutList",
   props: {
-    userId: {
+    campaignId: {
       type: String,
       required: true,
     }
@@ -107,7 +107,7 @@ export default {
     readableDate,
     fetchData() {
       this.loading = true;
-      let params = `?userId=${this.userId}&page=${this.page}&limit=${this.limit}`;
+      let params = `?campaignId=${this.campaignId}&page=${this.page}&limit=${this.limit}`;
       if (this.q) params += `&q=${this.q}`
       if (this.sort) params += `&sort=${this.sort}`;
       this.fetchPayoutList(params).then((data) => {

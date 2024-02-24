@@ -13,7 +13,7 @@ type _File = {
 };
 
 type Campaign = {
-  _id?: string;
+  _id: string;
   title: string;
   owner: User;
   description: string;

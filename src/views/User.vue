@@ -30,25 +30,11 @@
     </p>
     <p class="text-subtitle-2 text-center">{{ user.fullName }}</p>
     <p v-if="user.dob" class="text-subtitle-2 text-center">Born {{ readableDate(user.dob, 'MMM Do, YYYY') }}</p>
-    <v-card v-if="user.wallet">
-      <v-card-title>Available Balance</v-card-title>
-      <v-card-text>{{ user.wallet.currency + ' ' + user.wallet.amount.toLocaleString() }}</v-card-text>
+    <v-card>
       <v-card-actions>
-        <v-btn color="red" variant="outlined" v-if="user.wallet.recipientCode" @click="delRecipientDialog = true">Delete Paystack Recipient</v-btn>
+        <v-btn color="red" variant="outlined" v-if="user.paystackRecipientCode" @click="delRecipientDialog = true">Delete Paystack Recipient</v-btn>
       </v-card-actions>
     </v-card>
-    <v-tabs v-model="tab" bg-color="green">
-      <v-tab value="transactions">Transactions</v-tab>
-      <v-tab value="payouts">Payouts</v-tab>
-    </v-tabs>
-    <v-window v-model="tab">
-      <v-window-item value="transactions">
-        <wallet-transaction-list :userId="user._id" />
-      </v-window-item>
-      <v-window-item value="payouts">
-        <payout-list :userId="user._id" />
-      </v-window-item>
-    </v-window>
   </v-sheet>
 </template>
 
@@ -58,15 +44,12 @@ import { createNamespacedHelpers } from 'vuex';
 import userStoreModule from "@/store/modules/user";
 import { readableDate } from "@/utils/filters";
 import avatar from "@/assets/avatar.png";
-import WalletTransactionList from '@/components/WalletTransactionList.vue';
-import PayoutList from '@/components/PayoutList.vue';
 import paystackStoreModule from "@/store/modules/paystack";
 
 const { mapActions: userActions } = createNamespacedHelpers("USER_DATA");
 const { mapActions: paystackActions } = createNamespacedHelpers("PAYSTACK");
 
 export default {
-  components: { WalletTransactionList, PayoutList },
   name: 'EditUser',
   props: {
     userId: {

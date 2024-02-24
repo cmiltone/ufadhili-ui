@@ -83,7 +83,8 @@
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}
     </template>
     <template v-slot:[`item.action`]="{ item }">
-      <v-btn size="x-small" color="primary" icon="mdi-pencil-outline" :to="`/campaigns/edit/${item._id}`" title="Edit Campaign" />
+      <v-btn size="x-small" color="primary" icon="mdi-pencil-outline" :to="`/campaigns/edit/${item._id}`" title="Edit" />
+      <v-btn size="x-small" color="primary" icon="mdi-unfold-more-vertical" :to="`/campaigns/${item._id}`" title="View" />
       <v-btn size="x-small" color="red" icon="mdi-delete-alert" title="Delete Campaign" @click="delCampaignDialog = true; campaign = item" />
     </template>
   </v-data-table-server>
@@ -183,6 +184,7 @@ export default {
       this.loading = true;
       let params = `?page=${this.page}&limit=${this.limit}`;
       if (this.q) params += `&q=${this.q}`
+      if (!this.user.role.includes('admin')) params += `&ownerId=${this.user._id}`
       this.fetchCampaignList(params).then((data) => {
         if (data) {
           this.page = data.page;

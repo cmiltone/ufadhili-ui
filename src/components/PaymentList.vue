@@ -11,7 +11,7 @@
           <tr>
             <td valign="top" style="font-weight: bold; width: 90px;">Paid To:</td>
             <td>
-              {{ payment.campaignEnrolment?.campaign.owner.fullName }}
+              {{ payment.campaign.owner.fullName }}
             </td>
           </tr>
           <tr>
@@ -25,13 +25,13 @@
           <tr>
             <td valign="top" style="font-weight: bold;">Paid for:</td>
             <td>
-              {{ payment.campaignEnrolment?.campaign.title ?? 'n/a'}}
+              {{ payment.campaign.title ?? 'n/a'}}
             </td>
           </tr>
           <tr>
             <td valign="top" style="font-weight: bold;">Paid By:</td>
             <td>
-              {{ payment.campaignEnrolment?.user.fullName }}
+              {{ payment.user.fullName }}
               {{ payment.ref ? ', ' + payment.ref : '' }}
             </td>
           </tr>
@@ -73,10 +73,10 @@
       {{ item.currency }} {{  item.amount.toLocaleString() }}
     </template>
     <template v-slot:[`item.campaign`]="{ item }">
-      {{ item.campaignEnrolment?.campaign.title }}
+      {{ item.campaign.title }}
     </template>
     <template v-slot:[`item.user`]="{ item }">
-      {{ item.campaignEnrolment?.user.fullName }}
+      {{ item.user.fullName }}
     </template>
     <template v-slot:[`item.createdAt`]="{ item }">
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}

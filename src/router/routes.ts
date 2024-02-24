@@ -66,12 +66,17 @@ export const routes: Array<RouteRecordRaw> = [
         name: 'Create Campaign',
         component: () => import(/* webpackChunkName: "create-campaign" */ '@/views/CreateCampaign.vue'),
       },
-
       {
         path: 'edit/:campaignId',
         props: true,
         name: 'Edit Campaign',
         component: () => import(/* webpackChunkName: "edit-campaign" */ '@/views/EditCampaign.vue'),
+      },
+      {
+        path: ':campaignId',
+        name: 'Campaign',
+        props: true,
+        component: () => import(/* webpackChunkName: "campaign" */ '@/views/Campaign.vue'),
       },
     ],
   },

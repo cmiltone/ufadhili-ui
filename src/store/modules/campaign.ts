@@ -153,6 +153,24 @@ const campaign: Module<CampaignState, unknown> = {
           );
         });
     },
+    async fetchCampaignCount(context, params = "") {
+      return await api
+        .get(`/v1/campaign/count${params}`)
+        .then((response) => {
+          return response.data.campaignCount;
+        })
+        .catch((error) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Request failed!",
+              type: "error",
+              text: error.response?.data?.error?.message,
+            },
+            { root: true }
+          );
+        });
+    },
     async deleteCampaign(context, campaignId) {
       return await api
         .delete(`/v1/campaign/${campaignId}`)
