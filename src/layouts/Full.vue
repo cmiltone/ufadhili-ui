@@ -39,7 +39,7 @@
         <v-divider></v-divider>
 
         <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-home-city" title="Home" value="home" to="/" />
+          <v-list-item prepend-icon="mdi-home-city" title="Dashboard" value="dahshboard" to="/dashboard" />
           <v-list-item prepend-icon="mdi-cash-refund" title="Campaigns" value="campaigns" to="/campaigns" />
           <v-list-item v-if="user.role.includes('admin')" prepend-icon="mdi-cog" title="Categories" value="categories" to="/categories" />
           <v-list-item prepend-icon="mdi-cash" title="Payments" value="payments" to="/payments" />

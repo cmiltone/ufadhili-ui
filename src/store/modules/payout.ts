@@ -62,7 +62,7 @@ const payout: Module<PayoutState, unknown> = {
       return await api
         .post(`/v1/payout/initiate`, payout)
         .then((response) => {
-          if (response.data.success)
+          if (response.data.payout)
             context.dispatch(
               "setToast",
               {
@@ -82,7 +82,7 @@ const payout: Module<PayoutState, unknown> = {
               },
               { root: true }
             );
-          return response.data.success;
+          return response.data.payout;
         })
         .catch((error) => {
           context.dispatch(
@@ -90,6 +90,7 @@ const payout: Module<PayoutState, unknown> = {
             {
               title: "Request failed!",
               type: "error",
+              timeout: 3000,
               text: error.response?.data?.error?.message,
             },
             { root: true }

@@ -13,29 +13,18 @@ type CountryCode = {
 };
 
 type User = {
-  _id: string;
+  _id?: string;
   fullName: string;
   email: string;
   gender: 'male' | 'female' | 'other';
-  dob: Date;
+  dob?: Date;
   avatarUrl?: string;
   role: UserRole[];
   status?: 'active' | 'blocked';
   suggestions?: string[];
   phone: string;
   hash?: string;
-  wallet?: {
-    amount: number;
-    currency: string;
-    recipientCode?: string;
-  };
-  about?: {
-    title: string;
-    description: string;
-    links?: { _id: string; label: string; url: string }[];
-    imageUrls?: string[];
-  },
-  country?: CountryCode;
+  paystackRecipientCode: string;
   createdAt?: Date;
   updatedAt?: Date; 
 };

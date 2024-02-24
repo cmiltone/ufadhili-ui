@@ -113,9 +113,9 @@ export default {
       user(): User {
         return this.$store.getters.user;
       },
-    campaign() {
-      return this.$store.getters["EDIT_CAMPAIGN/getCampaign"](this.campaignId);
-    }
+      campaign() {
+        return this.$store.getters["EDIT_CAMPAIGN/getCampaign"](this.campaignId);
+      }
   },
   created() {
     this.fetchCampaign(`?campaignId=${this.campaignId}`).then((campaign) => {

@@ -3,6 +3,29 @@ import { RouteRecordRaw } from "vue-router";
 export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
+    component: () => import('@/layouts/Outlet.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: () => import(/* webpackChunkName: "landing" */ '@/views/Landing.vue'),
+        meta: {
+          noAuth: true
+        },
+      },
+      {
+        path: ':campaignId',
+        name: 'View Campaign',
+        props: true,
+        component: () => import(/* webpackChunkName: "view-campaign" */ '@/views/ViewCampaign.vue'),
+        meta: {
+          noAuth: true
+        },
+      },
+    ],
+  },
+  {
+    path: '/dashboard',
     component: () => import('@/layouts/Full.vue'),
     children: [
       {

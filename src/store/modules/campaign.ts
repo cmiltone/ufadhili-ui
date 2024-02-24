@@ -181,6 +181,35 @@ const campaign: Module<CampaignState, unknown> = {
           );
         });
     },
+    async uploadCampaignImage(context, { id, image}) {
+      return await api
+        .put(`/v1/campaign/${id}/cover-image`, image, {
+          timeout: 300000, // 5 minutes
+        })
+        .then((response) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Success!",
+              type: "success",
+              text: "Cover Image Uploaded",
+            },
+            { root: true }
+          );
+          return response.data.user;
+        })
+        .catch((error) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Request failed!",
+              type: "error",
+              text: error.response?.data?.error?.message,
+            },
+            { root: true }
+          );
+        });
+    },
   },
 };
 

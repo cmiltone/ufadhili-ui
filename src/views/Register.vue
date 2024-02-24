@@ -32,7 +32,7 @@
 
       <v-btn type="submit" color="primary" block class="mt-2">Register</v-btn>
 
-      <p>Already have an account? <v-btn variant="text" to="/auth/login" color="primary">Login</v-btn> </p>
+      <p>Already have an account? <v-btn variant="text" to="/auth" color="primary">Login</v-btn> </p>
     </v-form>
   </v-sheet>
 </template>
@@ -64,7 +64,7 @@
 
         if (!valid) return;
         this.$store.dispatch('register', {
-          url: '/', data: {
+          url: '/dashboard', data: {
             fullName: this.fullName,
             phone: this.phone,
             email: this.email,

@@ -12,7 +12,7 @@ export const setAuth = (
     if (authData.user) localStorage.setItem("user", JSON.stringify(authData.user));
 
     if (redirect) {
-      const url = authData.url ? authData.url : "/";
+      const url = authData.url ? authData.url : "/dashboard";
 
       location.assign(url);
     }
@@ -55,5 +55,5 @@ export const getAuthToken = (): string => {
 
 export const clearAuth = (to?: string, redirect = true): void => {
   localStorage.clear();
-  if (redirect) location.assign(`/auth?redirectUrl=${to ?? "/"}`);
+  if (redirect) location.assign(`/auth?redirectUrl=${to ?? "/dashboard"}`);
 };

@@ -54,8 +54,9 @@
 
         if (!valid) return;
         this.$store.dispatch('login', {
-          url: '/', data: { identifier: this.identifier, password: this.password
-        }});
+          url: this.$route.query.redirectUrl ?? '/dashboard',
+          data: { identifier: this.identifier, password: this.password },
+        });
       }
     }
   }

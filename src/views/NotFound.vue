@@ -6,7 +6,7 @@
 
         <div class="text-h4 pt-8 pb-10">Page not found :(</div>
 
-        <v-btn depressed large to="/"> Get me out of here! </v-btn>
+        <v-btn depressed large to="/dashboard"> Get me out of here! </v-btn>
       </v-col>
     </v-row>
   </v-container>

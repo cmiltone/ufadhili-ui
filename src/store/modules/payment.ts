@@ -1,24 +1,24 @@
 import { Module } from "vuex";
 
 import { api } from "@/utils/axios";
-import { campaignToJSON } from "./campaign";
+// import { campaignToJSON } from "./campaign";
 
 type PaymentState = {
   paymentPage: Page<Payment>;
 };
 
-export const paymentToJSON = (payment?: Payment): Payment => ({
-  _id: payment?._id ?? '',
-  ref: payment?.ref ?? '',
-  amount: payment?.amount ?? 0,
-  currency: payment?.currency ?? 'KES',
-  status: payment?.status ?? 'pending',
-  techFee: payment?.techFee ?? 0,
-  campaign: payment?.campaign ?? campaignToJSON(),
-  paymentMethod: payment?.paymentMethod ?? 'card',
-  createdAt: payment?.createdAt as Date,
-  updatedAt: payment?.updatedAt as Date,
-})
+// export const paymentToJSON = (payment?: Payment): Payment => ({
+//   _id: payment?._id ?? '',
+//   ref: payment?.ref ?? '',
+//   amount: payment?.amount ?? 0,
+//   currency: payment?.currency ?? 'KES',
+//   status: payment?.status ?? 'pending',
+//   techFee: payment?.techFee ?? 0,
+//   campaign: payment?.campaign ?? campaignToJSON(),
+//   paymentMethod: payment?.paymentMethod ?? 'card',
+//   createdAt: payment?.createdAt as Date,
+//   updatedAt: payment?.updatedAt as Date,
+// })
 
 const payment: Module<PaymentState, unknown> = {
   namespaced: true,
@@ -91,6 +91,62 @@ const payment: Module<PaymentState, unknown> = {
             {
               title: "Request failed!",
               type: "error",
+              text: error.response?.data?.error?.message,
+            },
+            { root: true }
+          );
+        });
+    },
+    async payByMobile(context, payload) {
+      return await api
+        .post(`/v1/payment/pay-by-mobile-money`, payload)
+        .then((response) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Success!",
+              type: "success",
+              text: "Payment Initiated",
+            },
+            { root: true }
+          );
+          return response.data.payment;
+        })
+        .catch((error) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Request failed!",
+              type: "error",
+              timeout: 3000,
+              text: error.response?.data?.error?.message,
+            },
+            { root: true }
+          );
+        });
+    },
+    async payByCard(context, payload) {
+      return await api
+        .post(`/v1/payment/pay-by-card`, payload)
+        .then((response) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Success!",
+              type: "success",
+              text: "Payment received",
+            },
+            { root: true }
+          );
+          return response.data.payment;
+        })
+        .catch((error) => {
+          context.dispatch(
+            "setToast",
+            {
+              title: "Request failed!",
+              type: "error",
+              timeout: 3000,
               text: error.response?.data?.error?.message,
             },
             { root: true }

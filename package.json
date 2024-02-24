@@ -18,6 +18,7 @@
     "sass": "^1.59.2",
     "vue": "^3.2.38",
     "vue-router": "^4.0.0",
+    "vue3-paystack": "^0.0.5",
     "vuetify": "^3.4.10",
     "vuex": "^4.1.0",
     "webfontloader": "^1.0.0"

@@ -28,7 +28,7 @@ const auth: Module<AuthState, unknown> = {
         .then((response) => {
           if (response.status == 200) {
             const { token, user } = response.data;
-            setAuth({ user, token, url: url || "/" });
+            setAuth({ user, token, url: url || "/dashboard" });
           }
           return response.data.user;
         })
@@ -71,7 +71,7 @@ const auth: Module<AuthState, unknown> = {
         .then((response) => {
           if (response.status == 201) {
             const { token, user } = response.data;
-            setAuth({ user, token, url: url || "/" });
+            setAuth({ user, token, url: url || "/dashboard" });
           }
           return response.data.user;
         })
@@ -83,6 +83,22 @@ const auth: Module<AuthState, unknown> = {
           });
         });
     },
+    async fetchAuthUser(context) {
+      return api
+        .get(`/v1/user/?userId=${context.state.user?._id}`)
+        .then((response) => {
+          setAuth({ user: response.data.user }, false);
+          context.commit("SET_USER", response.data.user);
+          return response.data.user;
+        })
+        .catch((error) => {
+          context.dispatch("setToast", {
+            title: "Fetching your profile failed!",
+            type: "error",
+            text: error.response?.data?.error?.message,
+          });
+        });
+    }
   },
 };
 

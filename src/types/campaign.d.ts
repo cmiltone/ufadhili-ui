@@ -15,9 +15,9 @@ type _File = {
 type Campaign = {
   _id?: string;
   title: string;
-  owner: string | User;
+  owner: User;
   description: string;
-  status?: 'active' | 'inactive';
+  status: 'active' | 'inactive';
   target: number;
   raised: number;
   current: number;
@@ -25,6 +25,6 @@ type Campaign = {
   coverImage?: string;
   category: CampaignCategory;
   suggestions?: string[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 };
