@@ -50,6 +50,7 @@ export default {
       required: true,
     }
   },
+  emits: ["saved"],
   data: () => ({
     title: "",
     description: "",
@@ -87,7 +88,7 @@ export default {
         }
       }).then((campaignCategory) => {
         if (campaignCategory) {
-          this.$emit("saved", campaignCategory);
+          this.$emit("saved", true);
         }
       });
     },

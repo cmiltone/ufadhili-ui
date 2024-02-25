@@ -33,8 +33,10 @@
     transition="dialog-bottom-transition"
     width="auto"
   >
-    <v-card v-if="campaignCategory">
-      <edit-campaign-category-form :category-id="campaignCategory._id" @saved="closeModal"/>
+    <v-card v-if="editModal && campaignCategory">
+      <v-card-text>
+        <edit-campaign-category-form :category-id="campaignCategory._id" @saved="closeModal"/>
+      </v-card-text>
     </v-card>
   </v-dialog>
 
@@ -43,7 +45,7 @@
     transition="dialog-bottom-transition"
     width="auto"
   >
-    <v-card>
+    <v-card v-if="createModal">
       <v-card-text>
         <campaign-category-form @saved="closeModal"/>
       </v-card-text>
@@ -52,7 +54,7 @@
 
   <v-row>
     <v-col>
-      <h3>CampaignCategorys</h3>
+      <h3>Campaign Categories</h3>
     </v-col>
     <v-col>
       <v-text-field v-model="q" prepend-icon="mdi-magnify" placeholder="Search Campaign Categories" @keyup="fetchData" />
@@ -81,7 +83,7 @@
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}
     </template>
     <template v-slot:[`item.action`]="{ item }">
-      <v-btn size="x-small" color="primary" icon="mdi-account-edit-outline" @click="campaignCategory = item; editModal = true" title="Edit Category" />
+      <v-btn size="x-small" color="primary" icon="mdi-pencil" @click="campaignCategory = item; editModal = true" title="Edit Category" />
       <v-btn size="x-small" color="red" icon="mdi-delete-alert" title="Delete Category" @click="campaignCategory = item; delCampaignCategoryDialog = true;" />
     </template>
   </v-data-table-server>
@@ -103,7 +105,7 @@ export default {
         headers: [
             {
                 key: 'title',
-                title: 'title',
+                title: 'Category',
                 sortable: true,
                 maxWidth: '150px'
             },

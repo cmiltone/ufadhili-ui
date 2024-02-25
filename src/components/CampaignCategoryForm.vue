@@ -44,6 +44,7 @@ const { mapActions: campaignCategoryActions } = createNamespacedHelpers("EDIT_CA
 
 export default {
   name: 'CampaignCategoryForm',
+  emits: ["saved"],
   data: () => ({
     title: "",
     description: "",
@@ -65,7 +66,7 @@ export default {
         description: this.description,
       }).then((campaignCategory) => {
         if (campaignCategory) {
-          this.$emit("saved", campaignCategory);
+          this.$emit("saved", true);
         }
       });
     },
