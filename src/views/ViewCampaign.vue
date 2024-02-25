@@ -29,6 +29,7 @@
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 cover
                 color="primary"
+                max-height="300px"
             >
                 <v-card-title class="text-white">{{campaign.title}}</v-card-title>
             </v-img>

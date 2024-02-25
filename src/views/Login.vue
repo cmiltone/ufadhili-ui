@@ -19,7 +19,7 @@
       />
 
       <v-btn type="submit" color="primary" block class="mt-2">Login</v-btn>
-      <p>Don't have an account? <v-btn variant="text" to="/auth/register" color="primary">Register</v-btn> </p>
+      <p>Don't have an account? <v-btn variant="text" :to="`/auth/register?redirectUrl=${$route.query.redirectUrl ?? '/dashboard'}`" color="primary">Register</v-btn> </p>
     </v-form>
   </v-sheet>
 </template>

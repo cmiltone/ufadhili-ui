@@ -4,8 +4,9 @@
       <v-toolbar color="primary" title="App Settings" />
       <v-card-text>
         <v-text-field
-          v-model="techFeePercentage"
-          :rules="getRules('Tech Fee Percentage')"
+          v-model.number="techFeePercentage"
+          type="number"
+          :rules="feeRules('Tech Fee Percentage')"
           label="Tech Fee Percentage"
           suffix="%"
           placeholder="e.g 10"
@@ -84,6 +85,12 @@ export default {
       return [
         (v: string) =>
           !!v || `${field} field is required`,
+      ];
+    },
+    feeRules(field: string): any[] {
+      return [
+        (v: number) =>
+          v >= 0 || `${field} field is required`,
       ];
     },
     async save() {

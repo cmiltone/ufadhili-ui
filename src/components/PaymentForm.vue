@@ -1,7 +1,7 @@
 <template>
   <div style="margin: '10px auto' max-width: 400px">
     <v-card width="390px">
-        <v-toolbar color="primary" title="Make donatio to Campaign" />
+        <v-toolbar color="primary" title="Make donation to Campaign" />
         <v-tabs v-model="tab">
             <v-tab value="mobile_money">Mobile Money</v-tab>
             <v-tab value="card">Card</v-tab>
@@ -26,7 +26,7 @@
                         :rules="amountRules"
                     />
                     <span v-if="amount > 0">
-                        A transaction fee of 1.5% (KES {{ Math.ceil(amount * 1.5/100) }}) will be charged.
+                        A transaction fee of 1.523% (KES {{ Math.ceil(amount * 1.523/100) }}) will be charged.
                     </span>
                 </v-card-text>
                 <v-card-actions class="justify-end">
@@ -154,7 +154,6 @@ export default {
     },
     paystackCallback(res: any) {
         if (!res)return;
-        console.log("res: ", res);
         this.payByCard({
             userId: this.user._id,
             amount: this.amount,

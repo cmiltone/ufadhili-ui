@@ -6,7 +6,7 @@ export const readableDate = (date: Date | string, format: string): string => {
 };
 
 export const numberWithCommas = (x: number): string => {
-  x = Math.floor(x);
+  x = Math.ceil(x);
   if (x === 0) return x.toString();
   if (!x) return "";
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
