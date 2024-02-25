@@ -83,9 +83,11 @@
       {{ readableDate(item.createdAt, 'MMM Do, YYYY, h:mmA') }}
     </template>
     <template v-slot:[`item.action`]="{ item }">
-      <v-btn size="x-small" color="primary" icon="mdi-pencil-outline" :to="`/campaigns/edit/${item._id}`" title="Edit" />
-      <v-btn size="x-small" color="primary" icon="mdi-unfold-more-vertical" :to="`/campaigns/${item._id}`" title="View" />
-      <v-btn size="x-small" color="red" icon="mdi-delete-alert" title="Delete Campaign" @click="delCampaignDialog = true; campaign = item" />
+      <div v-if="user.role.includes('admin') || user._id === item.owner._id">
+        <v-btn size="x-small" color="primary" icon="mdi-pencil-outline" :to="`/campaigns/edit/${item._id}`" title="Edit" />
+        <v-btn size="x-small" color="primary" icon="mdi-unfold-more-vertical" :to="`/campaigns/${item._id}`" title="View" />
+        <v-btn size="x-small" color="red" icon="mdi-delete-alert" title="Delete Campaign" @click="delCampaignDialog = true; campaign = item" />
+      </div>
     </template>
   </v-data-table-server>
 </template>
