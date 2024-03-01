@@ -113,6 +113,10 @@ export default {
         title: 'Paid By',
       },
       {
+        key: 'paymentMethod',
+        title: 'Method',
+      },
+      {
         key: 'createdAt',
         title: 'Date',
       },
